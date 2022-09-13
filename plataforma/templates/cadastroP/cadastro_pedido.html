@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'css/css.css' %}">
+{% endblock  %}
+
+{% block 'conteudo' %}
+
+
+<div class="container-md" style="margin-top: 100px;">
+    <form method="POST" action="{% url 'cadastro_pedido' %}" enctype="multipart/form-data"> {% csrf_token %}
+        <div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label >Serviço</label>
+                            <select id="servico" name="servico" class="form-control" onchange="alterar_preco()">
+                                <option value="M" >Mecanico</option>
+                                <option value="L" >Lavagem</option>
+                            </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label >Descrição</label>
+                        <input name="descricao" type="text" class="form-control"  placeholder="Breve Descrição...">
+                    </div>
+                </div>  
+
+            </div>
+
+            <div class="row">
+                    <div class="col">
+                            <label>Veiculo</label>
+                            <select name="veiculo" class="form-control">
+                                {% for i in veiculos %}
+                                    <option value="{{i.modelo}}">Modelo: {{i}} - CPF: {{i.cliente.cpf}}</option>
+                                {% endfor %}
+                                
+                            </select>
+                    </div>
+                    <div class="col">
+                        <label>Ordem de serviço</label>
+                        
+                            <input name="ods" type="number" class="form-control" readonly="readonly" value="{{ods}}">
+                        
+                        
+                    </div>
+                    
+                    <div class="col" id="div_preco">
+                        <label>Preço</label>
+                        <input name="preco" id="preco" type="text" class="form-control">
+                    </div>
+            </div>
+            <br>
+            
+
+            <br>
+            <br>
+            
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+        </div>
+    </form>
+
+    <br>
+    <br>
+    <br>
+    {%if messages%}
+    <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{ message }}
+            </div>
+        {% endfor%}
+    {% endif %}
+</div>
+
+<script>
+
+    var preco = document.getElementById('preco')
+    var div_preco = document.getElementById('div_preco')
+
+    function alterar_preco(){
+        var servico = document.getElementById('servico')
+        var servico_sel = servico.value
+        
+        
+        if (servico_sel == 'L'){
+            div_preco.innerHTML = '<div class="col" id="div_preco">\
+                        <label>Preço</label>\
+                        <input name="preco" id="preco" type="text" class="form-control" readonly="readonly" value="40">\
+                    </div>'
+        }
+        else if(servico_sel == 'M'){
+            div_preco.innerHTML = '<div class="col" id="div_preco">\
+                        <label>Preço</label>\
+                        <input name="preco" id="preco"  type="text" class="form-control">\
+                    </div>'
+        }
+    }
+      
+</script>
+
+{% endblock  %}

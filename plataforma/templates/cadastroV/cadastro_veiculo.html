@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'css/css.css' %}">
+{% endblock  %}
+
+{% block 'conteudo' %}
+
+<div class="container-md" style="margin-top: 100px;">
+    <form method="POST" action="{% url 'cadastro_veiculo' %}" enctype="multipart/form-data"> {% csrf_token %}
+        <div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label >Modelo</label>
+                        <input name="modelo" type="text" class="form-control" placeholder="Modelo...">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label >Marca</label>
+                        <input name="marca" type="text" class="form-control" placeholder="Marca...">
+                    </div>
+                </div>  
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label >Ano</label>
+                        <input name="ano" min="1900" max="2050" type="number" class="form-control" placeholder="Ano...">
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <label >Placa</label>
+                        <input name="placa" maxlength="9" type="text" class="form-control" placeholder="Placa...">
+                    </div>
+                <div class="col">
+                    <div class="row" style="margin-left: 10px;">
+                        <div class="form-group">
+                            <label>Insira imagem do veiculo</label>
+                            <input name="imagem" type="file" class="form-control-file">
+                          </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <div class="form-group">
+                <label>Dono do veiculo</label>
+                <select name="dono_veiculo" class="form-control">
+                {%for i in clientes%}
+                    {% if i.flag_ativo %}
+                        <option value="{{i.id}}">{{i.nome}} - {{i.cpf}}</option>
+                    {% endif %}
+                {%endfor%}
+                </select>
+              </div>
+
+              <br>
+              <br>
+
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+        </div>
+       
+    </form>
+    <br>
+    <br>
+    <br>
+    {%if messages%}
+    <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{ message }}
+            </div>
+        {% endfor%}
+    {% endif %}
+</div>
+
+{% endblock  %}

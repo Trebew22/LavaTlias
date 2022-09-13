@@ -1,0 +1,46 @@
+{% extends 'base_consulta.html' %}
+{% load static %}
+
+{% block 'consulta' %}
+
+<div class="card">
+    {%if i.veiculo.imagem%}
+    <a href="{%url 'consulta_unica' i.ods %}"><img src="{{i.veiculo.imagem.url}}" class="card-img-top" alt="{{i.veiculo.modelo}}"></a>
+    {%else%}
+    <a href="{%url 'consulta_unica' i.ods %}"><img src="" class="card-img-top" alt="{{i.veiculo.modelo}}"></a>
+    {%endif%}
+    <div class="card-body">
+        <h5 class="card-title">{{i}}</h5>
+        <p class="card-text">
+            Veiculo: {{i.veiculo}} - {{i.veiculo.marca}}, {{i.veiculo.ano}}, {{i.veiculo.placa}} <br><hr>
+            Dono: {{i.veiculo.cliente}} - CPF: {{i.veiculo.cliente.retornar_cpf_censurado}} <br><hr>
+            Contato: {{i.veiculo.cliente.telefone}}, {{i.veiculo.cliente.email}} <br><hr>
+            Ordem de Serviço: {{i.ods}} <br><hr>
+            
+            {% if i.flag_ativo %}
+            Pedido em andamento <br>
+            {%if i.combinar_preco == False %}
+            Valor: R$ {{i.preco}}0
+            {% endif %}
+            <hr>
+            {%else%}
+            Pedido finalização no valor de R$ {{i.preco}}0 <hr>
+            Data de abertura: {{i.data_inicio}}<br>
+            Data de finalização: {{i.data_final}}
+            {%endif%}
+
+        </p>
+
+        {%if not i.flag_ativo %}
+        {%else%}
+            {%if i.combinar_preco%}
+                <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{i.id}}">Concluir Pedido</a>
+            {%else%}
+                <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2{{i.id}}">Concluir Pedido</a>
+            {%endif%}
+        {%endif%}
+        
+    </div>
+</div>
+
+{% endblock  %}
