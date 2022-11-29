@@ -43,7 +43,6 @@ class Pedido(models.Model):
     flag_ativo = models.BooleanField(default=True)
     combinar_preco = models.BooleanField(default=False)
 
-
     def __str__(self):
         return self.descricao
 
@@ -52,10 +51,6 @@ class Pedido(models.Model):
 
     def data_final(self):
         return self.data_finalizacao.strftime("%d/%m/%Y %H:%M")
-
-    '''def save(self, *args, **kwargs):
-        self.data_abertura = datetime.now()
-        super(Pedido, self).save(*args, **kwargs)'''
 
 class Historico(models.Model):
     SERVICOS_ESCOLHA = (('M','Mecanico'),
@@ -68,5 +63,3 @@ class Historico(models.Model):
     ods = models.CharField(max_length=10)
     preco = models.FloatField(blank=True, null=True)
     imagem_final = models.ImageField(upload_to="img_final", null=True, blank=True)
-
-

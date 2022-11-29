@@ -422,7 +422,7 @@ def ajustar_lav(request):
 
 def gerar_pdf(request, ods):
 
-    utils.pdf(request, ods)
+    utils.gerar_pdf(request, ods)
 
     return redirect(f'/consulta_unica/{ods}')
 
