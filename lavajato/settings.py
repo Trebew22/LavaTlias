@@ -2,6 +2,7 @@
 from pathlib import Path
 import os
 from django.contrib.messages import constants
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@!^v_$4g#!_t573&a$m#bx$ourk_iylx*1tg+cxd09jl$oroht'
+SECRET_KEY = 'random-secret-key'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,7 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'plataforma',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -114,7 +114,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'templates/static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -131,7 +131,6 @@ MESSAGE_TAGS = {
     constants.WARNING: 'alert-warning',
 }
 
-#Phone Number field
+#Emails
 
-PHONENUMBER_DEFAULT_REGION = 'BR'
-PHONENUMBER_DB_FORMAT = 'NATIONAL'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

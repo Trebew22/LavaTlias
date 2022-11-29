@@ -1,0 +1,39 @@
+.meu_container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 68vw;
+    margin: 0 auto;
+    width: fit-content;
+    justify-content: center;
+}
+
+div.card.card_f {
+    max-width: 40vw;
+}
+
+.card {
+    max-width: 40vw;
+}
+
+.meu_container > div {
+    max-width: 500px;
+    margin: 15px;
+}
+
+.cardu{
+    flex: 1 1 500px;
+}
+
+.meu_container_unico {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    max-width: 650px;
+    margin: 0 auto;
+    margin-bottom: 200px;
+    margin-top: 50px;
+}
+
+.card {
+    max-width: 650px;
+}

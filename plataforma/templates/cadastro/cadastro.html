@@ -3,63 +3,161 @@
 
 {% block 'head' %}
 <link rel="stylesheet" href="{% static 'css/css.css' %}">
+<link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
 {% endblock  %}
 
 {% block 'conteudo' %}
 
-<div class="container-md" style="margin-top: 100px;">
-    <form method="POST" action="{% url 'adicionar_cliente' %}"> {% csrf_token %}
+<div class="container-md" style="margin-top: 10px;">
+    <h1>
+        Clientes:
+    </h1>
+    <div class="row">
+        <button type="button" class="btn-troca" onclick="exibir_form('1')">ADICIONAR CLIENTE</button>
+        <button type="button" class="btn-troca" onclick="exibir_form('2')">ATUALIZAR CLIENTE</button>
+    </div>
+    
+    {% if switch%}
+    <form style="display: none;" id="form_add" method="POST" action="{% url 'cadastro_cliente' %}" enctype="multipart/form-data"> {% csrf_token %}
+    {%else%}
+    <form id="form_add" method="POST" action="{% url 'cadastro_cliente' %}" enctype="multipart/form-data"> {% csrf_token %}
+    {%endif%}
+
         <div>
             <div class="row">
-                <div class="col">
+                <div class="col-md">
                     <div class="form-group">
                         <label >Nome</label>
-                        <input name="nome" type="text" class="form-control" placeholder="Nome...">
+                        <input name="nome" type="text" class="form-control" placeholder="Nome..." value="{{nome}}">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md">
                     <div class="form-group">
                         <label >Email</label>
-                        <input name="email" type="email" class="form-control" placeholder="name@example.com">
+                        <input name="email" type="email" class="form-control" placeholder="name@example.com" value="{{email}}">
                     </div>
                 </div>  
 
             </div>
 
             <div class="row">
-                <div class="col">
+                <div class="col-md">
                     <div class="form-group">
                         <label >CPF</label>
-                        <input name="cpf" maxlength="14" type="text" class="form-control" placeholder="xxx.xxx.xxx-xx">
+                        <input name="cpf" maxlength="14" type="text" class="form-control" placeholder="xxx.xxx.xxx-xx" value="{{cpf}}">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md">
                     <div class="form-group">
                         <label >Telefone</label>
-                        <input name="telefone" maxlength="12" type="text" class="form-control" placeholder="Telefone...">
+                        <input name="telefone" maxlength="12" type="text" class="form-control" placeholder="Telefone..." value="{{telefone}}">
                     </div>
                 </div>
-
             </div>
+
+            <div id="veiculo">
+                
+                <hr>
+                <h1>
+                    Veiculos:
+                </h1>
+                {% for modelo, marca, ano, placa in veiculos %}
+                    <br>
+                    <div class="row"> 
+                        <div class="col-md"> 
+                            <input value="{{modelo}}" name="modelo" type="text" class="form-control" placeholder="Modelo..."> 
+                        </div> 
+                        
+                        <div class="col-md"> 
+                            <input value="{{marca}}" name="marca" type="text" class="form-control" placeholder="Marca...">
+                        </div> 
+
+                        <div class="col-md">
+                            <input value="{{ano}}" name="ano" min="1900" max="2050" type="number" class="form-control" placeholder="Ano...">
+                        </div> 
+                    </div> 
+                    <br>
+                    <div class="row"> 
+                        <div class="col-md">
+                            <input value="{{placa}}" name="placa" maxlength="9" type="text" class="form-control" placeholder="Placa...">
+                        </div> 
+
+                        <div class="col-md">
+                            <label>Insira imagem do veiculo</label>
+                            <input value="" name="imagem" type="file" class="form-control-file">
+                        </div> 
+                    </div> 
+                    <hr>
+                {%endfor%}
+            </div>
+            <span onclick="add_veiculo()" class="btn btn-primary">Adicionar Veiculo</span>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <br>
             
-            <br>
-            <br>
-
-            <button type="submit" class="btn btn-success">Cadastrar</button>
         </div>
-       
     </form>
-    <br>
-    <br>
-    <br>
-    {%if messages%}
-    <br>
-        {% for message in messages %}
-            <div class="alert {{message.tags}}">
-                {{ message }}
+
+    {%if switch%}
+    <form style="display: block;" id="form_att" method="POST" action="{% url 'att' %}"> {% csrf_token %}
+    {%else%}
+    <form id="form_att" method="POST" action="{% url 'att_cliente' %}"> {% csrf_token %}
+    {%endif%}
+    
+        <br>
+        <select id="cliente-select" onchange="dados_cliente()" class="form-control" name="cliente-id">
+                <option value="">----------</option>
+            {%for cliente in clientes%}
+                <option value="{{cliente.id}}">{{cliente.nome}} - {{cliente.retornar_cpf_censurado}}</option>
+            {%endfor%}
+        </select>
+        <br>
+        
+
+        <div id="form_att_cliente">
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label >Nome</label>
+                        <input id="nome" name="nome" type="text" class="form-control" placeholder="Nome...">
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        <label >Email</label>
+                        <input id="email" name="email" type="email" class="form-control" placeholder="name@example.com">
+                    </div>
+                </div>  
+
             </div>
-        {% endfor%}
-    {% endif %}
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label >CPF</label>
+                        <input id="cpf" name="cpf" maxlength="14" type="text" class="form-control" placeholder="xxx.xxx.xxx-xx" >
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        <label >Telefone</label>
+                        <input id="telefone" name="telefone" maxlength="12" type="text" class="form-control" placeholder="Telefone..." >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-success">Enviar</button>
+
+    </form>
+
+    <div id="form-att-veiculos" style="margin-bottom: 2rem;">
+            
+    </div>
+    
+    </div>
+
 </div>
 
+<script src="{% static 'js/cadastro.js' %}"></script>
 {% endblock  %}

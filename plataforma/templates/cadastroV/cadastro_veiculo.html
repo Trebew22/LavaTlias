@@ -7,7 +7,10 @@
 
 {% block 'conteudo' %}
 
-<div class="container-md" style="margin-top: 100px;">
+<div class="container-md" style="margin-top: 20px;">
+    <h1>
+        Veiculo:
+    </h1>
     <form method="POST" action="{% url 'cadastro_veiculo' %}" enctype="multipart/form-data"> {% csrf_token %}
         <div>
             <div class="row">
@@ -54,7 +57,7 @@
                 <select name="dono_veiculo" class="form-control">
                 {%for i in clientes%}
                     {% if i.flag_ativo %}
-                        <option value="{{i.id}}">{{i.nome}} - {{i.cpf}}</option>
+                        <option value="{{i.id}}">{{i.nome}} - {{i.retornar_cpf_censurado}}</option>
                     {% endif %}
                 {%endfor%}
                 </select>
@@ -70,14 +73,6 @@
     <br>
     <br>
     <br>
-    {%if messages%}
-    <br>
-        {% for message in messages %}
-            <div class="alert {{message.tags}}">
-                {{ message }}
-            </div>
-        {% endfor%}
-    {% endif %}
 </div>
 
 {% endblock  %}

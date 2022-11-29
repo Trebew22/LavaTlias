@@ -1,0 +1,22 @@
+
+.btn-troca {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 0 auto;
+    width: 45%;
+    color: white;
+    background: #0f2646;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: .6em;
+    border: none;
+}
+
+#form_att {
+    display: none;
+}
+
+#form_att_cliente {
+    display: none;
+}

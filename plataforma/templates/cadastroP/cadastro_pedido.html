@@ -8,7 +8,10 @@
 {% block 'conteudo' %}
 
 
-<div class="container-md" style="margin-top: 100px;">
+<div class="container-md" style="margin-top: 20px;">
+    <h1>
+        Pedidos:
+    </h1>
     <form method="POST" action="{% url 'cadastro_pedido' %}" enctype="multipart/form-data"> {% csrf_token %}
         <div>
             <div class="row">
@@ -35,7 +38,7 @@
                             <label>Veiculo</label>
                             <select name="veiculo" class="form-control">
                                 {% for i in veiculos %}
-                                    <option value="{{i.modelo}}">Modelo: {{i}} - CPF: {{i.cliente.cpf}}</option>
+                                    <option value="{{i.modelo}}">Modelo: {{i}} - CPF: {{i.cliente.retornar_cpf_censurado}}</option>
                                 {% endfor %}
                                 
                             </select>
@@ -66,14 +69,6 @@
     <br>
     <br>
     <br>
-    {%if messages%}
-    <br>
-        {% for message in messages %}
-            <div class="alert {{message.tags}}">
-                {{ message }}
-            </div>
-        {% endfor%}
-    {% endif %}
 </div>
 
 <script>
@@ -101,5 +96,6 @@
     }
       
 </script>
+<script src="{% static 'js/js.js' %}"></script>
 
 {% endblock  %}

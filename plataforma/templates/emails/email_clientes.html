@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Olá, {{servico.veiculo.cliente}}</h1>
+    <p>Seu serviço foi finalizado com sucesso.</p>
+
+    <p>------------------------------------------</p>
+    <p>Informações sobre o pedido abaixo:</p>
+
+    <p>Veiculo: {{servico.veiculo}}, {{servico.veiculo.marca}} - Placa: {{servico.veiculo.placa}}</p>
+    <img src="{{servico.veiculo.imagem.url}}" alt="img_veiculo_cliente" width="400" height="200">
+    <p>Descrição do problema: {{servico}}</p>
+    <p>ODS: {{servico.ods}}</p>
+    <p>Preço: {{servico.preco}}</p>
+    <p>------------------------------------------</p>
+    <p>Inicio em {{servico.data_inicio}} termino em {{servico.data_final}}</p>
+</body>
+</html>

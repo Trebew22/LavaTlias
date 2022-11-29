@@ -5,42 +5,96 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
     {% block 'head' %}
     
     {% endblock  %}
     <title>{% block 'titulo' %}{% endblock  %}</title>
   </head>
   <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-      <a class="navbar-brand" href="{% url 'home' %}">LavaTlias</a>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
-              Menu
-            </a>
-            <div class="dropdown-menu">
-              <a href="{% url 'adicionar_cliente' %}" class="dropdown-item">Adicionar Clientes</a>
-              <a href="{% url 'cadastro_veiculo' %}" class="dropdown-item">Adicionar Veiculos</a>
-              <a href="{% url 'cadastro_pedido' %}" class="dropdown-item">Adicionar Pedidos</a>
-              <a href="{% url 'consultar' %}" class="dropdown-item">Consultar Pedidos</a>
-            </div>
-          </li>
-        </ul>
+    <div class="sidebar" id="nav">
+      <div class="logo-details">
+        <span id="hamburger"></span>
       </div>
-      <form class="form-inline" method="POST" action="{% url 'home' %}"> {% csrf_token %}
-        <input name="ods" class="form-control mr-sm-2" type="search" placeholder="Insira a Ordem de Serviço" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Consultar</button>
-      </form>
-    </nav>
+      <div class="logo_name"><a href="{% url 'home' %}">TliasJato</a></div>
+      <ul class="nav-list" id="nav-list">
+        <li class="list">
+          <div class="item">
+            <a class="tabs" href="{% url 'home' %}">
+              <ion-icon class="icon" name="home-outline"></ion-icon>
+              <span class="links_name">Página inicial</span>
+            </a>
+          </div>
+        </li>
+        <li class="list">
+        
+        <div class="item">
+          <a class="tabs" href="{% url 'cadastro_cliente' %}">
+          <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+          <span class="links_name">Clientes</span>
+        </a>
+        </div>
+      
+      </li>
+      <li class="list">
+        
+        <div class="item">
+          <a class="tabs" href="{% url 'cadastro_veiculo' %}">
+            <ion-icon class="icon" name="car-outline"></ion-icon>
+          <span class="links_name">Veiculos</span>
+        </a>
+        </div>
+      
+      </li>
+      <li class="list">
+        
+        <div class="item">
+          <a class="tabs" href="{% url 'cadastro_pedido' %}">
+          <ion-icon class="icon" name="receipt-outline"></ion-icon>
+          <span class="links_name">Pedidos</span>
+        </a>
+        </div>
+      
+      </li>
+      <li class="list">
+        
+        <div class="item">
+          <a class="tabs" href="{% url 'consultar' %}">
+          <ion-icon class="icon" name="document-text-outline"></ion-icon>
+          <span class="links_name">Consultar</span>
+        </a>
+        </div>
+      
+      </li>
+      </ul>
 
+      <div id="form">
+        <form id="form_search" class="form" method="POST" action="{% url 'home' %}"> {% csrf_token %}
+          <input id="form_s" name="ods" class="form-control" type="search" placeholder="Insira a Ordem de Serviço" aria-label="Search">
+          <button id="btn_search" class="btn btn-success" type="submit">Buscar</button>
+        </form>
+      </div>
+
+    </div>
+    {%if messages%}
+    {%for message in messages%}
+        <div class="alert {{message.tags}} mensagem">
+            {{ message }}
+        </div>
+    {%endfor%}
+    {%endif%}
+    
     {% block 'conteudo' %}
     
     {% endblock  %}
 
+    {%block 'script'%}{%endblock%}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="{% static 'js/nav.js' %}"></script>
+    <script src="{% static 'js/js.js' %}"></script>
   </body>
 </html>
