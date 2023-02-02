@@ -191,17 +191,22 @@ form#form_search.form {
     margin: 0 auto;
 }
 
-.tabela {
+.table-container {
     display: flex;
     width: 80vw;
     margin: 0 auto;
-    margin-top: 8vh;
-    margin-left: 11vw;
+    margin-top: 50px;
     max-height: 70vh;
     overflow: auto;
     border: .5rem solid var(--dark-color);
     border-radius: 1rem;
     background: var(--dark-color);
+}
+
+.table-content td p{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 ::-webkit-scrollbar {

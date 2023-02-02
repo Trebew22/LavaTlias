@@ -7,8 +7,8 @@
 
 {% block 'conteudo' %}
 
-<div class="tabela">
-<table class="table table-striped table-dark">
+<div class="table-container">
+  <table class="table table-striped table-dark">
     <thead>
       <tr>
         <th scope="col">Nome - CPF</th>
@@ -22,38 +22,34 @@
     </thead>
     <tbody>
 
-        {% for i in pedido %}
-          {%if i.flag_ativo%}
-            <tr>
-              <th scope="row">{{i.veiculo.cliente.nome}} - {{i.veiculo.cliente.retornar_cpf_censurado}}</th>
-              <td>{{i.veiculo.modelo}}</td>
-              <td>{{i.veiculo.marca}}</td>
-              <td>{{i.veiculo.placa}}</td>
+      {% for i in pedido %}
+      {%if i.flag_ativo%}
+      <tr class="table-content">
+        <th scope="row">{{i.veiculo.cliente.nome}} - {{i.veiculo.cliente.retornar_cpf_censurado}}</th>
+        <td><p class="td-p mb-0">{{i.veiculo.modelo}}</p></td>
+        <td><p class="td-p mb-0">{{i.veiculo.marca}}</p></td>
+        <td><p class="td-p mb-0">{{i.veiculo.placa}}</p></td>
 
-                {% if i.servicos == 'M' %}
-                  <td>Mecanico</td>
-                {% else %}
-                  <td>Lavagem</td>
-                {% endif%}
+        {% if i.servicos == 'M' %}
+        <td><p class="td-p mb-0">Mecanico</p></td>
+        {% else %}
+        <td> <p class="td-p mb-0">Lavagem</p></td>
+        {% endif%}
 
-                <td>{{i.ods}}</td>
+        <td> <p class="td-p mb-0">{{i.ods}}</p></td>
 
-              {%if i.veiculo.imagem %}
-                <td><a href="{% url 'consulta_unica' i.ods %}"><img alt="{{i.veiculo}}" src="{{i.veiculo.imagem.url}}" style="height: 50px;"></a></td>
-              {%else%}
-              <td><a href="{% url 'consulta_unica' i.ods %}"><img alt="{{i.veiculo}}" src="" style="height: 50px;"></a></td>
-              {% endif %}
-            </tr>
-          {%endif%}
-        {%endfor%}
+        {%if i.veiculo.imagem %}
+        <td><a href="{% url 'consulta_unica' i.ods %}"><img alt="{{i.veiculo}}" src="{{i.veiculo.imagem.url}}"
+              style="height: 50px;"></a></td>
+        {%else%}
+        <td><a href="{% url 'consulta_unica' i.ods %}"><img alt="{{i.veiculo}}" src="" style="height: 50px;"></a></td>
+        {% endif %}
+      </tr>
+      {%endif%}
+      {%endfor%}
 
     </tbody>
   </table>
 </div>
-
-
-
-
- 
 
 {% endblock  %}
