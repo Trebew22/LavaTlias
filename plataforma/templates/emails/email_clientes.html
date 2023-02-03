@@ -10,7 +10,7 @@
     <img src="{{servico.veiculo.imagem.url}}" alt="img_veiculo_cliente" width="400" height="200">
     <p>Descrição do problema: {{servico}}</p>
     <p>ODS: {{servico.ods}}</p>
-    <p>Preço: {{servico.preco}}</p>
+    <p>Preço: R${{servico.preco|floatformat:2}}</p>
     <p>------------------------------------------</p>
     <p>Inicio em {{servico.data_inicio}} termino em {{servico.data_final}}</p>
 </body>

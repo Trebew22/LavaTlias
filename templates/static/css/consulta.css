@@ -41,3 +41,10 @@ div.card.card_f {
 .card {
     max-width: 650px;
 }
+
+.img {
+    width: 350px;
+    height: 200px;
+    object-fit: cover;
+}
+

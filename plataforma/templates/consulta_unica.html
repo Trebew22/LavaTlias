@@ -11,46 +11,43 @@
 
     {%for i in pedidos%}
 
-    <div class="card card_f">
+    <div class="p-2 mt-4 border rounded border-dark d-flex bg-light justify-content-center" style="width: 360px; flex-wrap: wrap; margin: 25px 25px;">
         {%if i.veiculo.imagem %}
-        <img src="{{i.veiculo.imagem.url}}" class="card-img-top" alt="{{i.veiculo.modelo}}">
+        <img src="{{i.veiculo.imagem.url}}" class="img" alt="{{i.veiculo.modelo}}">
         {%else%}
-        <img src="" class="card-img-top card-img-u" alt="{{i.veiculo.modelo}}">
+        <img src="" class="img" alt="{{i.veiculo.modelo}}">
         {%endif%}
-        <div class="card-body card-body-u">
-            <h5 class="card-title">{{i}}</h5>
-            <p class="card-text">
-                Veiculo: {{i.veiculo}} - {{i.veiculo.marca}}, {{i.veiculo.ano}}, {{i.veiculo.placa}} <br><hr>
-                Dono: {{i.veiculo.cliente}} - CPF: {{i.veiculo.cliente.retornar_cpf_censurado}} <br><hr>
-                Contato: {{i.veiculo.cliente.telefone}}, {{i.veiculo.cliente.email}} <br><hr>
-                Ordem de Serviço: {{i.ods}} <br><hr>
-                
+        <div>
+            <h4 style="text-align: center;">{{i}}</h4>
+                <p class="mb-1">Veiculo: {{i.veiculo}} - {{i.veiculo.marca}}, {{i.veiculo.ano}}, {{i.veiculo.placa}} </p><hr class="mt-0 mb-1">
+                <p class="mb-1"> Dono: {{i.veiculo.cliente}} - CPF: {{i.veiculo.cliente.retornar_cpf_censurado}}</p><hr class="mt-0 mb-1">
+                <p class="mb-1">Contato: {{i.veiculo.cliente.telefone}}, {{i.veiculo.cliente.email}}</p><hr class="mt-0 mb-1">
+                <p class="mb-1">Ordem de Serviço: {{i.ods}}</p><hr class="mt-0 mb-1">
                 {% if i.flag_ativo %}
-                Pedido em andamento <br>
+                <p class="mb-1">Pedido em andamento</p>
+                
                 {%if i.combinar_preco == False %}
-                Valor: R$ {{i.preco}}0
+                <p class="mb-1">Valor: R$ {{i.preco|floatformat:2}}</p>
                 {% endif %}
-                <hr>
+                <hr class="mt-0 mb-1">
                 {%else%}
-                Pedido finalização no valor de R$ {{i.preco}}0 <hr>
-                Data de abertura: {{i.data_inicio}}<br>
-                Data de finalização: {{i.data_final}}
+                <p class="mb-1">Pedido finalizado no valor de R$ {{i.preco|floatformat:2}}</p><hr class="mt-0 mb-1">
+                <p class="mb-1">Data de abertura: {{i.data_inicio}}</p>
+                <p class="mb-1">Data de finalização: {{i.data_final}}</p>
 
                 {%endif%}
-
-            </p>
 
             {%if not i.flag_ativo %}
             {%else%}
                 {%if i.combinar_preco%}
-                    <a class="btn btn-primary" data-toggle="modal" data-target="#modalMecanico" onclick="m_ods('{{i.ods}}')">Concluir Pedido</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMecanico" onclick="m_ods('{{i.ods}}')">Concluir Pedido</button>
                 {%else%}
-                    <a class="btn btn-primary" data-toggle="modal" data-target="#modalLavagem" onclick="l_ods('{{i.ods}}')">Concluir Pedido</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLavagem" onclick="l_ods('{{i.ods}}')">Concluir Pedido</button>
                 {%endif%}
             {%endif%}
 
             {%if not i.flag_ativo and not i.combinar_preco %}
-            <hr>
+            <hr class="mt-0 mb-1">
             <a class="btn btn-danger" href="{% url 'gerar_pdf' i.ods %}">PDF</a>
             <a class="btn btn-primary" href="{% url 'enviar_email' i.ods %}">Email</a>
             {%endif%}
@@ -68,9 +65,7 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Preencha os campos para fechar o pedido</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 
@@ -89,7 +84,7 @@
                     <input name="ods" type="hidden" id="ods_m">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
                 
@@ -108,9 +103,7 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Preencha os campos para fechar o pedido</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 
@@ -121,7 +114,7 @@
                     <input name="ods" type=hidden id="ods_l">
                 </div>                          
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
                 
