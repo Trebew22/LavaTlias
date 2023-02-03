@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.db.transaction import atomic
 
 def home(request):
     if request.method == 'GET':
@@ -117,13 +118,23 @@ def cadastro_cliente(request):
             messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
             return redirect('/cadastro_cliente')
 
+def excluir_veiculo(request, id):
+    try:
+        veiculo = Veiculos.objects.get(id=id)
+        veiculo.delete()
+        return True
+
+    except:
+        messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
+        return redirect('/cadastro_cliente')
+
 def att(request):
     
     id_cliente = request.POST.get('id_cliente')
     
     cliente = Cliente.objects.filter(id=id_cliente)
     veiculos = Veiculos.objects.filter(cliente=id_cliente)
-
+    print(id_cliente)
     cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
     veiculos_json = json.loads(serializers.serialize('json', veiculos))
 
@@ -133,37 +144,87 @@ def att(request):
 
     return JsonResponse(data)
 
+@atomic
 def att_cliente(request):
 
     if request.method == 'POST':
-        cliente_id = request.POST.get('cliente-id')
+
+        rm_car_id = request.POST.getlist('rm_car')
+        
+        if rm_car_id:
+                for i in rm_car_id:
+                    excluir_veiculo(request, i)
+        
+        cliente_id = request.POST.get('cliente_id')
         nome = request.POST.get('nome')
         email = request.POST.get('email')
         cpf = request.POST.get('cpf')
         telefone = request.POST.get('telefone')
 
-        switch = True
+        modelo = request.POST.getlist('modelo')
+        marca = request.POST.getlist('marca')
+        ano = request.POST.getlist('ano')
+        placa = request.POST.getlist('placa')
+        veiculo_id = request.POST.getlist('car_id')
+
+        lista_carros = list(zip(modelo, marca, ano, placa, veiculo_id))
+
+        cliente = Cliente.objects.get(id=cliente_id)
+
+        for i in lista_carros:
+            modelo = i[0]
+            marca = i[1]
+            ano = i[2]
+            placa = i[3]
+            veiculo_id = i[4]
+            
+            veiculo = Veiculos.objects.get(id=veiculo_id)
+
+            try:
+
+                if not utils.verf_placa(request, placa, veiculo_id):
+                    return redirect('/cadastro_cliente')
+
+                if not utils.verf_modelo(request, modelo):
+                    return redirect('/cadastro_cliente')
+
+                if not utils.verf_marca(request, marca):
+                    return redirect('/cadastro_cliente')
+
+                if not utils.verf_ano(request, ano):
+                    return redirect('/cadastro_cliente')
+
+                veiculo.modelo = modelo
+                veiculo.marca = marca
+                veiculo.ano = ano
+                veiculo.placa = placa
+
+                veiculo.save()
+
+            except Exception as e:
+                print(e)
+                messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
+                return redirect('/cadastro_cliente')
+
         clientes = Cliente.objects.all()
 
         try:
             
-            cliente = Cliente.objects.get(id=cliente_id)
-
             if cliente.nome != nome:
                 if not utils.verf_nome(request, nome):
-                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes,'switch': switch})
+                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes})
 
             if cliente.cpf != cpf:
-                if not utils.verf_cpf(request, cpf):
-                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes,'switch': switch})
+                if not utils.verf_cpf(request, cpf, cliente_id):
+                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes})
 
             if cliente.email != email:
                 if not utils.verf_email(request, email):
-                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes,'switch': switch})
+                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes})
             
             if cliente.telefone != telefone:
                 if not utils.verf_telefone(request, telefone):
-                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes,'switch': switch})
+                    return render(request, 'cadastro/cadastro.html', {'clientes':clientes})
             
             cliente.nome = nome
             cliente.email = email
@@ -179,60 +240,6 @@ def att_cliente(request):
             print(e)
             messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
             return redirect('/cadastro_cliente')
-
-@csrf_exempt
-def att_veiculo(request, id):
-
-    if request.method == 'POST':
-        modelo = request.POST.get('modelo')
-        marca = request.POST.get('marca')
-        ano = request.POST.get('ano')
-        placa = request.POST.get('placa')
-
-        switch = True
-        clientes = Cliente.objects.all()
-
-        veiculo = Veiculos.objects.get(id=id)
-
-        if not utils.verf_placa(request, placa, id):
-            return redirect('/cadastro_cliente')
-
-        if not utils.verf_modelo(request, modelo):
-            return redirect('/cadastro_cliente')
-
-        if not utils.verf_marca(request, marca):
-            return redirect('/cadastro_cliente')
-
-        if not utils.verf_ano(request, ano):
-            return redirect('/cadastro_cliente')
-
-        try:
-            veiculo.modelo = modelo
-            veiculo.marca = marca
-            veiculo.ano = ano
-            veiculo.placa = placa
-
-            veiculo.save()
-
-            messages.add_message(request, constants.SUCCESS, 'Cliente atualizado com sucesso')
-            return redirect('/cadastro_cliente')
-            
-        except Exception as e:
-            print(e)
-            messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
-            return render(request, 'cadastro/cadastro.html', {'clientes': clientes, 'switch': switch})
-
-def excluir_veiculo(request, id):
-    try:
-        veiculo = Veiculos.objects.get(id=id)
-        veiculo.delete()
-
-        messages.add_message(request, constants.SUCCESS, 'Veiculo removido com sucesso')
-        return redirect('/cadastro_cliente')
-
-    except:
-        messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
-        return redirect('/cadastro_cliente')
 
 def cadastro_veiculo(request):
     if request.method == 'GET':

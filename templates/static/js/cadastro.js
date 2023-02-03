@@ -72,9 +72,11 @@ function dados_cliente(){
         div_veiculo = document.getElementById('form-att-veiculos')
         div_veiculo.innerHTML = '<hr><h1>Veiculos:</h1>'
 
-        for(i=0; i < data['veiculos'].length; i++) {
+        console.log(data)
+
+        for(let i=0; i < data['veiculos'].length; i++) {
   
-            div_veiculo.innerHTML += '<form action="/att_veiculo/'+ data['veiculos'][i]['id'] +'" method="POST" id="form-att-veiculos">\
+            div_veiculo.innerHTML += '<div>\
             <div class="row">\
                 <div class="col-sm-6">\
                     <input value="'+ data['veiculos'][i]['veiculo']['modelo'] +'" name="modelo" type="text" class="form-control" placeholder="Modelo..."> \
@@ -91,13 +93,32 @@ function dados_cliente(){
                 <input value="'+ data['veiculos'][i]['veiculo']['placa'] +'" name="placa" maxlength="9" type="text" class="form-control" placeholder="Placa...">\
                 </div>\
                 <div class="col-sm-3 d-flex justify-content-center">\
-                <a href="/excluir_veiculo/'+ data['veiculos'][i]['id'] +'" type="submit" class="btn btn-danger">Excluir</a>\
-                </div>\
-            </div>\
-                <hr>\
-            </form>'
+                    <button type="button" data-id="'+ data['veiculos'][i]['id']+'" id="rm-car" class="btn btn-danger rm">Excluir</button>\
+                    </div>\
+                    \
+                    </div><hr></div>\
+                    <input type="hidden" name="car_id" value="'+ data['veiculos'][i]['id']+'"></input>\
+                    \
+                    '
+                        
+                    }
+                    rmCar = document.querySelectorAll('.rm');
+                    arrayRmCar = Array.from(rmCar);
+    
+                    for (let j = 0; j < arrayRmCar.length; j++) {
+                        arrayRmCar[j].addEventListener('click', function(e) {
+                            id = String(e.target.dataset.id)
+                            inputHidden = document.createElement('input');
+                            inputHidden.type = 'hidden';
+                            inputHidden.value = id;
+                            inputHidden.name = 'rm_car';
 
-        }
+                            parentElement = e.target.parentElement.parentElement.parentElement.parentElement;
+                            parentElement.appendChild(inputHidden);
+                            e.target.parentElement.parentElement.parentElement.remove();
+                        });
+                    }
 
     })
 }
+

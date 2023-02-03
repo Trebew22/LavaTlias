@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block 'head' %}
-<link rel="stylesheet" href="{% static 'css/css.css' %}">
 <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
 {% endblock  %}
 
@@ -91,14 +90,12 @@
         </div>
     </form>
 
-    {%if switch%}
-    <form style="display: block;" id="form_att" method="POST" action="{% url 'att' %}"> {% csrf_token %}
-    {%else%}
+
     <form id="form_att" method="POST" action="{% url 'att_cliente' %}"> {% csrf_token %}
-    {%endif%}
+
     
         <br>
-        <select id="cliente-select" onchange="dados_cliente()" class="form-control" name="cliente-id">
+        <select id="cliente-select" onchange="dados_cliente()" class="form-control" name="cliente_id">
                 <option value="">----------</option>
             {%for cliente in clientes%}
                 <option value="{{cliente.id}}">{{cliente.nome}} - {{cliente.retornar_cpf_censurado}}</option>
@@ -107,7 +104,7 @@
         <br>
         
 
-        <div id="form_att_cliente">
+        <div id="form_att_cliente" class="mb-2">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -123,7 +120,7 @@
                 </div>  
 
             </div>
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label >CPF</label>
@@ -137,13 +134,13 @@
                     </div>
                 </div>
             </div>
+            <div id="form-att-veiculos" style="margin-bottom: 40px;">
+                
+            </div>
         </div>
-
+        <button type="submit" class="btn btn-success">Enviar</button>
     </form>
 
-    <div id="form-att-veiculos" style="margin-bottom: 2rem;">
-            
-    </div>
     
     </div>
 

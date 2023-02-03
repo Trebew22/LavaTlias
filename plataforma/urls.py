@@ -8,7 +8,6 @@ urlpatterns = [
     path('cadastro_cliente/', views.cadastro_cliente, name='cadastro_cliente'),
     path('att/', views.att, name='att'),
     path('att_cliente/', views.att_cliente, name='att_cliente'),
-    path('att_veiculo/<str:id>', views.att_veiculo, name='att_veiculo'),
     path('excluir_veiculo/<str:id>', views.excluir_veiculo, name='excluir_veiculo'),
     path('cadastro_veiculo/', views.cadastro_veiculo, name='cadastro_veiculo'),
     path('cadastro_pedido/', views.cadastro_pedido, name='cadastro_pedido'),

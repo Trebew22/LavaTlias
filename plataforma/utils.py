@@ -104,8 +104,8 @@ def verf_ano(request, ano):
 
     return True
 
-def verf_placa(request, placa, id_cliente):
-    list_placas = Veiculos.objects.filter(placa=placa).exclude(id=id_cliente)
+def verf_placa(request, placa, id_veiculo):
+    list_placas = Veiculos.objects.filter(placa=placa).exclude(id=id_veiculo)
 
     if list_placas.exists():
         messages.add_message(request, constants.WARNING, 'Falha ao cadastrar o Veiculo, verifique a placa')
