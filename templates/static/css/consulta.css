@@ -12,7 +12,7 @@ div.card.card_f {
 }
 
 .card {
-    max-width: 40vw;
+    max-width: 10vw;
 }
 
 .meu_container > div {
@@ -22,6 +22,10 @@ div.card.card_f {
 
 .cardu{
     flex: 1 1 500px;
+}
+
+.card-img-top {
+    
 }
 
 .meu_container_unico {

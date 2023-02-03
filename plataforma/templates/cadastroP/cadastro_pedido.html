@@ -8,14 +8,13 @@
 {% block 'conteudo' %}
 
 
-<div class="container-md" style="margin-top: 20px;">
+<div class="container-md mt-4">
     <h1>
         Pedidos:
     </h1>
     <form method="POST" action="{% url 'cadastro_pedido' %}" enctype="multipart/form-data"> {% csrf_token %}
-        <div>
             <div class="row">
-                <div class="col">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label >Serviço</label>
                             <select id="servico" name="servico" class="form-control" onchange="alterar_preco()">
@@ -24,17 +23,14 @@
                             </select>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label >Descrição</label>
                         <input name="descricao" type="text" class="form-control"  placeholder="Breve Descrição...">
                     </div>
                 </div>  
 
-            </div>
-
-            <div class="row">
-                    <div class="col">
+                    <div class="col-sm-6">
                             <label>Veiculo</label>
                             <select name="veiculo" class="form-control">
                                 {% for i in veiculos %}
@@ -43,7 +39,7 @@
                                 
                             </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-6">
                         <label>Ordem de serviço</label>
                         
                             <input name="ods" type="number" class="form-control" readonly="readonly" value="{{ods}}">
@@ -51,19 +47,13 @@
                         
                     </div>
                     
-                    <div class="col" id="div_preco">
+                    <div class="col-sm-6" id="div_preco">
                         <label>Preço</label>
                         <input name="preco" id="preco" type="text" class="form-control">
                     </div>
             </div>
-            <br>
             
-
-            <br>
-            <br>
-            
-            <button type="submit" class="btn btn-success">Cadastrar</button>
-        </div>
+            <button type="submit" class="btn btn-success mt-5">Cadastrar</button>
     </form>
 
     <br>
@@ -82,13 +72,13 @@
         
         
         if (servico_sel == 'L'){
-            div_preco.innerHTML = '<div class="col" id="div_preco">\
+            div_preco.innerHTML = '<div class="col-sm-6" id="div_preco">\
                         <label>Preço</label>\
                         <input name="preco" id="preco" type="text" class="form-control" readonly="readonly" value="40">\
                     </div>'
         }
         else if(servico_sel == 'M'){
-            div_preco.innerHTML = '<div class="col" id="div_preco">\
+            div_preco.innerHTML = '<div class="col-sm-6" id="div_preco">\
                         <label>Preço</label>\
                         <input name="preco" id="preco"  type="text" class="form-control">\
                     </div>'

@@ -7,8 +7,6 @@ class Cliente(models.Model):
     email = models.EmailField()
     telefone = models.CharField(max_length=13)
     flag_ativo = models.BooleanField(default=True)
-    lavagens = models.IntegerField(default=0)
-    consertos = models.IntegerField(default=0)
     
     def __str__(self):
         return self.nome
