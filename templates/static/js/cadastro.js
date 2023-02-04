@@ -63,6 +63,7 @@ function dados_cliente(){
         email = document.getElementById('email')
         email.value = data['cliente']['email']
 
+
         cpf = document.getElementById('cpf')
         cpf.value = data['cliente']['cpf']
 

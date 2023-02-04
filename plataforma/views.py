@@ -134,7 +134,6 @@ def att(request):
     
     cliente = Cliente.objects.filter(id=id_cliente)
     veiculos = Veiculos.objects.filter(cliente=id_cliente)
-    print(id_cliente)
     cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
     veiculos_json = json.loads(serializers.serialize('json', veiculos))
 
@@ -144,6 +143,7 @@ def att(request):
 
     return JsonResponse(data)
 
+@csrf_exempt
 @atomic
 def att_cliente(request):
 
@@ -160,6 +160,8 @@ def att_cliente(request):
         email = request.POST.get('email')
         cpf = request.POST.get('cpf')
         telefone = request.POST.get('telefone')
+
+        print(cpf)
 
         modelo = request.POST.getlist('modelo')
         marca = request.POST.getlist('marca')

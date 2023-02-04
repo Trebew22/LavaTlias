@@ -206,7 +206,6 @@ form#form_search.form {
 .table-content td p{
     display: flex;
     flex-direction: row;
-    justify-content: center;
 }
 
 ::-webkit-scrollbar {

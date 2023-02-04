@@ -69,11 +69,7 @@ def verf_email1(request, email):
     return True
 
 def verf_telefone(request, telefone):
-    if not re.search('[0-9]{8,12}', telefone):
-        messages.add_message(request, constants.ERROR, 'Telefone inválido')
-        return False
-
-    if len(telefone) >= 11:
+    if not re.search('[0-9]{8,14}', telefone):
         messages.add_message(request, constants.ERROR, 'Telefone inválido')
         return False
 
