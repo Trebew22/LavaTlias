@@ -5,7 +5,7 @@ ENV PYTHONDONTWEITEBYTECODE=1
 RUN useradd -ms /bin/bash python
 RUN pip install --upgrade pip pipenv
 COPY Pipfile* ./
-RUN pipenv install --system --ignore-pipfile
+RUN pipenv install --system
 
 USER python
 WORKDIR /home/tlias
