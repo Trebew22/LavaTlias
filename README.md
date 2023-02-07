@@ -1,10 +1,24 @@
 # Lavatlias
-LavaTlias é um projeto simples onde há as opções de lavar ou pedir para um mecânico análisar o seu veiculo. LavaTlias foi feito apartir da utilização de Django, CSS, Python, SQlite. É basicamente um gerenciador de clientes com algumas funcionalidades extras
-# Funcionalidades e Tecnologias usadas para o desenvolvimento
-O Projeto conta com cadastros de clientes, veiculos, pedidos, gerenciamento de pedidos, extração de pdf com informações dos pedidos, envio de email, etc
+LavaTlias é uma aplicação web local para gerenciamento de serviços automotivos. Com ele, você pode registrar clientes, veículos e realizar pedidos de serviço, sejam eles para lavagem ou análise por um mecânico. O projeto foi desenvolvido a base de Django, CSS, HTML e SQlite.
 
-![image](https://user-images.githubusercontent.com/72241406/216777889-6faec9f1-d9d9-473c-ac5a-644ef84bff5b.png)
+# Funcionalidades
+<ul>
+  <li>Cadastro de clientes</li>
+  <li>Cadastro de veículos</li>
+  <li>Gerenciamento de pedidos de serviço</li>
+  <li>Emissão de relatórios em PDF com informações sobre os pedidos</li>
+  <li>Envio de templates de e-mails para o cliente no console</li>
+  <li>Entre outras funcionalidades.</li>
+</ul>
 
-![image](https://user-images.githubusercontent.com/72241406/216777913-a1ad80b3-153c-4ce8-9033-939a4b522a12.png)
+# Requisitos
+Para executar esse projeto, você precisa ter o Docker instalado em sua máquina.
 
-[37564562-2022-11-28.pdf](https://github.com/Trebew22/LavaTlias/files/10108751/37564562-2022-11-28.pdf)
+# Instalação
+Clone ou faça o download desse repositório
+Abra o terminal e vá até a pasta do projeto
+Execute o comando "docker-compose up --build"
+Acesse a aplicação através do endereço http://localhost:8000 no seu navegador.
+
+# Observações
+Certifique-se de que todas as dependências descritas no arquivo Pipfile estejam instaladas antes de executar o projeto. Além disso, verifique as configurações de banco de dados no arquivo settings.py e, se necessário, altere-as de acordo com as suas necessidades.
